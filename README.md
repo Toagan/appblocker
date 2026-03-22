@@ -16,7 +16,7 @@ Configuration is a simple text file (`~/.config/appblocker/blocked.txt`) contain
 ## Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/appblocker.git
+git clone https://github.com/Toagan/appblocker.git
 cd appblocker
 bash install.sh
 ```

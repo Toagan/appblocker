@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Block Distractions on Mac — Free Focus Tool for Students</title>
+<meta name="description" content="Free distraction blocker for students on Mac. Block YouTube, Reddit, games, and social media during study sessions. No subscription. Open source.">
+<link rel="canonical" href="https://toagan.github.io/appblocker/for-students/">
+<meta property="og:title" content="Block Distractions on Mac — Free Focus Tool for Students">
+<meta property="og:description" content="Free distraction blocker for students. Block YouTube, Reddit, games during study sessions. No subscription.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://toagan.github.io/appblocker/for-students/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Block Distractions on Mac — Free Focus Tool for Students">
+<meta name="twitter:description" content="Free distraction blocker for students. Block YouTube, Reddit, games during study. No subscription.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "AppBlocker",
+  "operatingSystem": "macOS",
+  "applicationCategory": "Productivity",
+  "audience": {"@type": "EducationalAudience", "educationalRole": "student"},
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Free distraction blocker for students on Mac. Block apps and websites during study sessions."
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#00ff88;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #1a1a2e;padding:1rem 1.5rem;position:sticky;top:0;background:#0a0a0a;z-index:100}
+nav .inner{max-width:720px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1.5rem}
+nav .logo{font-weight:700;color:#00ff88;font-size:1.1rem;margin-right:auto}
+nav a.nav-link{color:#888;font-size:0.85rem;transition:color .2s}
+nav a.nav-link:hover{color:#e0e0e0;text-decoration:none}
+main{max-width:720px;margin:0 auto;padding:0 1.5rem}
+section{padding:4rem 0;border-bottom:1px solid #1a1a2e}
+section:last-of-type{border-bottom:none}
+h1{font-size:clamp(1.8rem,4.5vw,2.5rem);line-height:1.2;color:#fff;margin-bottom:1rem}
+h2{font-size:1.5rem;color:#fff;margin-bottom:1rem}
+h3{font-size:1.15rem;color:#fff;margin-bottom:0.5rem}
+p{margin-bottom:1rem}
+.accent{color:#00ff88}
+.warn{color:#ff6b6b}
+.sub{font-size:1.1rem;color:#aaa;margin-bottom:2rem}
+.install-box{background:#1a1a2e;border:1px solid #2a2a4e;border-radius:8px;padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;overflow-x:auto}
+.install-box code{font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.9rem;color:#00ff88;white-space:nowrap;flex:1}
+.install-box button{background:#00ff88;color:#0a0a0a;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;white-space:nowrap;transition:background .2s}
+.install-box button:hover{background:#00cc6a}
+.code-block{background:#1a1a2e;border-radius:6px;padding:0.75rem 1rem;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.85rem;color:#00ff88;overflow-x:auto;margin-bottom:1rem}
+.card{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:1.5rem;margin-bottom:1rem}
+.card h3{margin-bottom:0.5rem}
+.card p{color:#aaa;font-size:0.95rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.callout{background:#1a1a2e;border-left:3px solid #00ff88;padding:1.25rem;margin-bottom:1.5rem;border-radius:0 6px 6px 0}
+.callout p{margin:0;color:#ccc;font-size:0.95rem}
+.callout-warn{background:#1a1a2e;border-left:3px solid #ff6b6b;padding:1.25rem;margin-bottom:1.5rem;border-radius:0 6px 6px 0}
+.callout-warn p{margin:0;color:#ccc;font-size:0.95rem}
+details{margin-bottom:1rem;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden}
+summary{padding:1rem 1.25rem;cursor:pointer;font-weight:600;color:#fff;background:#111;list-style:none;display:flex;align-items:center;gap:0.5rem}
+summary::before{content:"+";color:#00ff88;font-weight:700;font-size:1.1rem;width:1.25rem}
+details[open] summary::before{content:"-"}
+summary::-webkit-details-marker{display:none}
+details .answer{padding:0 1.25rem 1rem;color:#aaa;font-size:0.95rem}
+footer{border-top:1px solid #1a1a2e;padding:2rem 1.5rem;text-align:center;color:#555;font-size:0.85rem}
+footer a{color:#888}
+.cta-section{text-align:center;padding:3rem 0}
+.cta-section p{color:#aaa;margin-bottom:1.5rem}
+.breadcrumb{padding-top:2rem;font-size:0.85rem;color:#555}
+.breadcrumb a{color:#888}
+.price-tag{display:inline-block;background:#00ff88;color:#0a0a0a;padding:0.25rem 0.75rem;border-radius:4px;font-weight:700;font-size:0.9rem}
+@media(max-width:600px){
+  .grid-2{grid-template-columns:1fr}
+  nav .inner{justify-content:center}
+  nav .logo{margin-right:0;width:100%;text-align:center}
+  section{padding:3rem 0}
+}
+</style>
+</head>
+<body>
+<nav>
+<div class="inner">
+<a href="/appblocker/" class="logo">AppBlocker</a>
+<a href="/appblocker/" class="nav-link">Home</a>
+<a href="/appblocker/block-websites-on-mac/" class="nav-link">Block Websites</a>
+<a href="/appblocker/block-apps-on-mac/" class="nav-link">Block Apps</a>
+<a href="/appblocker/for-students/" class="nav-link">Students</a>
+<a href="/appblocker/for-developers/" class="nav-link">Developers</a>
+<a href="/appblocker/for-remote-workers/" class="nav-link">Remote Workers</a>
+</div>
+</nav>
+
+<main>
+<div class="breadcrumb"><a href="/appblocker/">Home</a> / For Students</div>
+
+<section>
+<h1>Block Distractions on Mac &mdash; <span class="accent">Free Focus Tool for Students</span></h1>
+<p class="sub">Exam season. 47 tabs open. YouTube autoplay in one of them. You've re-read the same paragraph three times. Sound familiar? AppBlocker is the free tool that removes distractions from your Mac so you can actually study.</p>
+
+<div style="margin-bottom:1.5rem"><span class="price-tag">100% FREE</span> <span style="color:#888;font-size:0.9rem;margin-left:0.5rem;">No trial. No credit card. No "student discount." Just free.</span></div>
+
+<div class="install-box">
+<code id="install-cmd">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+</section>
+
+<section>
+<h2>The student distraction stack</h2>
+<p style="color:#aaa;margin-bottom:1.5rem;">You know exactly which apps and sites are killing your grades. Here's the copy-paste study session setup:</p>
+
+<div class="code-block"># The "I have an exam tomorrow" starter pack
+appblocker block youtube.com
+appblocker block reddit.com
+appblocker block twitter.com
+appblocker block instagram.com
+appblocker block tiktok.com
+appblocker block "Discord"
+appblocker block "Steam"
+appblocker block "Messages"</div>
+
+<p style="color:#aaa;">Copy that. Paste it into Terminal. Your Mac just became a study machine. When you're done studying, unblock everything with <code style="color:#00ff88">appblocker unblock --all</code>.</p>
+</section>
+
+<section>
+<h2>Why students love AppBlocker</h2>
+<div class="grid-2">
+<div class="card">
+<h3><span class="accent">It's free</span></h3>
+<p>Not "$40/year free trial" free. Not "free with ads" free. Actually free. Open source. MIT license. You're a student &mdash; you shouldn't have to pay to focus.</p>
+</div>
+<div class="card">
+<h3><span class="accent">30-second setup</span></h3>
+<p>One command to install. One command per distraction. You could have it running before your coffee cools down. No accounts, no onboarding, no tutorials.</p>
+</div>
+<div class="card">
+<h3><span class="accent">Actually blocks things</span></h3>
+<p>Screen Time has an "Ignore Limit" button. Browser extensions can be disabled in 2 seconds. AppBlocker works at the system level. You have to deliberately go to Terminal to unblock.</p>
+</div>
+<div class="card">
+<h3><span class="accent">No data collection</span></h3>
+<p>AppBlocker doesn't track what you block, when you study, or how often you try to visit blocked sites. Zero telemetry. Your procrastination habits stay private.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>Study session recipes</h2>
+<p style="color:#aaa;margin-bottom:1.5rem;">Copy the one that fits your situation:</p>
+
+<div class="card">
+<h3>Exam cram mode</h3>
+<p>Nuclear option. Block everything. You can socialize after the exam.</p>
+<div class="code-block"># Block all entertainment and social media
+appblocker block youtube.com
+appblocker block reddit.com
+appblocker block twitter.com
+appblocker block instagram.com
+appblocker block tiktok.com
+appblocker block twitch.tv
+appblocker block netflix.com
+appblocker block "Discord"
+appblocker block "Slack"
+appblocker block "Steam"
+appblocker block "Messages"</div>
+</div>
+
+<div class="card">
+<h3>Essay writing mode</h3>
+<p>Keep research tools available, block the time sinks.</p>
+<div class="code-block"># Block entertainment, keep browsers for research
+appblocker block youtube.com
+appblocker block reddit.com
+appblocker block twitter.com
+appblocker block instagram.com
+appblocker block "Discord"
+appblocker block "Messages"</div>
+</div>
+
+<div class="card">
+<h3>ADHD focus mode</h3>
+<p>If your brain chases every notification and shiny object, remove them all.</p>
+<div class="code-block"># Block everything that pings or tempts
+appblocker block youtube.com
+appblocker block reddit.com
+appblocker block twitter.com
+appblocker block instagram.com
+appblocker block tiktok.com
+appblocker block "Discord"
+appblocker block "Slack"
+appblocker block "Messages"
+appblocker block "Mail"
+appblocker block "News"</div>
+</div>
+</section>
+
+<section>
+<h2>The procrastination truth</h2>
+<div class="callout-warn">
+<p><strong>You're not lazy.</strong> You're fighting an unfair fight. YouTube, Reddit, TikTok &mdash; they employ thousands of engineers whose entire job is making you scroll one more time. You're a student trying to read a textbook. That's not a fair fight. AppBlocker levels the playing field.</p>
+</div>
+<p style="color:#aaa;">The difference between students who focus and students who don't isn't willpower. It's environment. The ones who focus <em>removed the distractions</em> instead of trying to resist them. That's what AppBlocker does.</p>
+</section>
+
+<section>
+<h2>FAQ for students</h2>
+
+<details>
+<summary>Is this actually free? What's the catch?</summary>
+<div class="answer"><p>No catch. AppBlocker is open source software under the MIT license. It's 60 lines of Swift code. No account, no email signup, no credit card, no "free tier with limitations." It's free because focus shouldn't cost money.</p></div>
+</details>
+
+<details>
+<summary>Will this work on my school Mac?</summary>
+<div class="answer"><p>It works on any Mac running macOS 12 or later. If your school manages your Mac with MDM, you might need admin access to install. Most personal Macs and student-owned Macs work fine.</p></div>
+</details>
+
+<details>
+<summary>Can I unblock stuff when I'm done studying?</summary>
+<div class="answer"><p>Yes. Run <code>appblocker unblock "AppName"</code> or <code>appblocker unblock domain.com</code> and it's immediately available again. Block for focus, unblock for downtime.</p></div>
+</details>
+
+<details>
+<summary>I have ADHD. Will this help?</summary>
+<div class="answer"><p>AppBlocker can't treat ADHD. But it can remove some of the most tempting distractions from your environment. Many people with ADHD find that removing the <em>option</em> to get distracted is more effective than trying to resist the impulse. It's one tool in the toolbox.</p></div>
+</details>
+
+<details>
+<summary>What if I need YouTube for a class?</summary>
+<div class="answer"><p>Unblock it for the specific class session, then re-block it when you're done. The commands take 2 seconds. The key is making distraction the exception, not the default.</p></div>
+</details>
+</section>
+
+<section class="cta-section">
+<h2>Your GPA will thank you.</h2>
+<p>Every student who installed AppBlocker has the same reaction: "Why didn't I do this sooner?"</p>
+<div class="install-box" style="max-width:560px;margin:0 auto">
+<code>curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+<p style="color:#555;font-size:0.85rem;margin-top:1rem;">Free. No account. No credit card. Just focus.</p>
+</section>
+</main>
+
+<footer>
+<p><a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">GitHub</a> &middot; MIT License &middot; <a href="/appblocker/">AppBlocker</a></p>
+</footer>
+</body>
+</html>

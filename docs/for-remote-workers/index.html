@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Block Distractions While Working From Home on Mac</title>
+<meta name="description" content="Block distracting apps and websites while working from home on Mac. Free, open source tool. No subscription. Stop social media, YouTube, and games during work hours.">
+<link rel="canonical" href="https://toagan.github.io/appblocker/for-remote-workers/">
+<meta property="og:title" content="Block Distractions While Working From Home on Mac">
+<meta property="og:description" content="Block distracting apps and websites while working from home. Free, open source, no subscription.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://toagan.github.io/appblocker/for-remote-workers/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Block Distractions While Working From Home on Mac">
+<meta name="twitter:description" content="Block distracting apps and websites while WFH. Free, open source, no subscription.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "AppBlocker",
+  "operatingSystem": "macOS",
+  "applicationCategory": "Productivity",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Block distracting apps and websites while working from home on Mac. Free, open source."
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#00ff88;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #1a1a2e;padding:1rem 1.5rem;position:sticky;top:0;background:#0a0a0a;z-index:100}
+nav .inner{max-width:720px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1.5rem}
+nav .logo{font-weight:700;color:#00ff88;font-size:1.1rem;margin-right:auto}
+nav a.nav-link{color:#888;font-size:0.85rem;transition:color .2s}
+nav a.nav-link:hover{color:#e0e0e0;text-decoration:none}
+main{max-width:720px;margin:0 auto;padding:0 1.5rem}
+section{padding:4rem 0;border-bottom:1px solid #1a1a2e}
+section:last-of-type{border-bottom:none}
+h1{font-size:clamp(1.8rem,4.5vw,2.5rem);line-height:1.2;color:#fff;margin-bottom:1rem}
+h2{font-size:1.5rem;color:#fff;margin-bottom:1rem}
+h3{font-size:1.15rem;color:#fff;margin-bottom:0.5rem}
+p{margin-bottom:1rem}
+.accent{color:#00ff88}
+.warn{color:#ff6b6b}
+.sub{font-size:1.1rem;color:#aaa;margin-bottom:2rem}
+.install-box{background:#1a1a2e;border:1px solid #2a2a4e;border-radius:8px;padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;overflow-x:auto}
+.install-box code{font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.9rem;color:#00ff88;white-space:nowrap;flex:1}
+.install-box button{background:#00ff88;color:#0a0a0a;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;white-space:nowrap;transition:background .2s}
+.install-box button:hover{background:#00cc6a}
+.code-block{background:#1a1a2e;border-radius:6px;padding:0.75rem 1rem;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.85rem;color:#00ff88;overflow-x:auto;margin-bottom:1rem}
+.code-block .comment{color:#555}
+.card{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:1.5rem;margin-bottom:1rem}
+.card h3{margin-bottom:0.5rem}
+.card p{color:#aaa;font-size:0.95rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.callout{background:#1a1a2e;border-left:3px solid #ff6b6b;padding:1.25rem;margin-bottom:1.5rem;border-radius:0 6px 6px 0}
+.callout p{margin:0;color:#ccc;font-size:0.95rem}
+.callout-green{background:#1a1a2e;border-left:3px solid #00ff88;padding:1.25rem;margin-bottom:1.5rem;border-radius:0 6px 6px 0}
+.callout-green p{margin:0;color:#ccc;font-size:0.95rem}
+details{margin-bottom:1rem;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden}
+summary{padding:1rem 1.25rem;cursor:pointer;font-weight:600;color:#fff;background:#111;list-style:none;display:flex;align-items:center;gap:0.5rem}
+summary::before{content:"+";color:#00ff88;font-weight:700;font-size:1.1rem;width:1.25rem}
+details[open] summary::before{content:"-"}
+summary::-webkit-details-marker{display:none}
+details .answer{padding:0 1.25rem 1rem;color:#aaa;font-size:0.95rem}
+footer{border-top:1px solid #1a1a2e;padding:2rem 1.5rem;text-align:center;color:#555;font-size:0.85rem}
+footer a{color:#888}
+.cta-section{text-align:center;padding:3rem 0}
+.cta-section p{color:#aaa;margin-bottom:1.5rem}
+.breadcrumb{padding-top:2rem;font-size:0.85rem;color:#555}
+.breadcrumb a{color:#888}
+.badge{display:inline-block;background:#1a1a2e;border:1px solid #2a2a4e;color:#aaa;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.75rem;font-weight:600;vertical-align:middle}
+@media(max-width:600px){
+  .grid-2{grid-template-columns:1fr}
+  nav .inner{justify-content:center}
+  nav .logo{margin-right:0;width:100%;text-align:center}
+  section{padding:3rem 0}
+}
+</style>
+</head>
+<body>
+<nav>
+<div class="inner">
+<a href="/appblocker/" class="logo">AppBlocker</a>
+<a href="/appblocker/" class="nav-link">Home</a>
+<a href="/appblocker/block-websites-on-mac/" class="nav-link">Block Websites</a>
+<a href="/appblocker/block-apps-on-mac/" class="nav-link">Block Apps</a>
+<a href="/appblocker/for-students/" class="nav-link">Students</a>
+<a href="/appblocker/for-developers/" class="nav-link">Developers</a>
+<a href="/appblocker/for-remote-workers/" class="nav-link">Remote Workers</a>
+</div>
+</nav>
+
+<main>
+<div class="breadcrumb"><a href="/appblocker/">Home</a> / For Remote Workers</div>
+
+<section>
+<h1>Block Distractions While Working From Home <span class="accent">on Mac</span></h1>
+<p class="sub">The office had one advantage: social pressure. At home, nobody sees you open YouTube at 2pm on a Tuesday. AppBlocker is the accountability partner that doesn't judge &mdash; it just blocks.</p>
+
+<div class="install-box">
+<code id="install-cmd">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+</section>
+
+<section>
+<h2>The WFH distraction problem</h2>
+<p style="color:#aaa;">Working from home is great until it isn't. No commute. No dress code. No one watching. That last part is the problem.</p>
+
+<div class="callout">
+<p><strong>The WFH tax:</strong> Remote workers report spending an average of 67 minutes per day on non-work activities during work hours. That's over 5 hours per week. Over 11 full work days per year. Doing nothing productive. On the clock.</p>
+</div>
+
+<p style="color:#aaa;">You're not a bad worker. You're a normal human with a computer connected to infinite entertainment and zero supervision. The solution isn't more discipline. It's <span class="accent">fewer options</span>.</p>
+</section>
+
+<section>
+<h2>Your WFH focus setup</h2>
+<p style="color:#aaa;margin-bottom:1.5rem;">Run this at the start of your workday. Unblock at 5pm. Reclaim your time.</p>
+
+<div class="code-block"><span class="comment"># Morning routine: start of workday</span>
+appblocker block youtube.com
+appblocker block reddit.com
+appblocker block twitter.com
+appblocker block instagram.com
+appblocker block tiktok.com
+appblocker block facebook.com
+appblocker block netflix.com
+
+<span class="comment"># Block personal apps during work hours</span>
+appblocker block "Messages"
+appblocker block "Steam"
+appblocker block "Discord"
+
+<span class="comment"># End of workday: unblock everything</span>
+<span class="comment"># appblocker unblock --all</span></div>
+</section>
+
+<section>
+<h2>WFH scenarios</h2>
+<div class="grid-2">
+<div class="card">
+<h3>The deep work block</h3>
+<p>You have a big project. Block everything including email and Slack. Tell your team you'll be offline for 2 hours. Do the work.</p>
+<div class="code-block">appblocker block "Slack"
+appblocker block "Mail"
+appblocker block "Teams"
+appblocker block "Zoom"</div>
+</div>
+<div class="card">
+<h3>The social media detox</h3>
+<p>Keep work tools open. Just kill the time-wasting sites. The minimum effective dose.</p>
+<div class="code-block">appblocker block youtube.com
+appblocker block reddit.com
+appblocker block twitter.com
+appblocker block instagram.com</div>
+</div>
+<div class="card">
+<h3>The "I work from the couch" fix</h3>
+<p>When the couch makes everything feel like weekend mode. Block entertainment apps too.</p>
+<div class="code-block">appblocker block "Netflix"
+appblocker block "TV"
+appblocker block "Music"
+appblocker block "Podcasts"</div>
+</div>
+<div class="card">
+<h3>After-hours boundary</h3>
+<p>WFH blurs work and life. After 6pm, block work apps. Protect your personal time.</p>
+<div class="code-block">appblocker block "Slack"
+appblocker block "Teams"
+appblocker block "Mail"
+appblocker block "Zoom"</div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>Scheduled blocking <span class="badge">Coming Soon</span></h2>
+<p style="color:#aaa;">We're building scheduled blocking so you can set it once and forget it:</p>
+
+<div class="callout-green">
+<p><strong>Coming soon:</strong> <code>appblocker schedule block youtube.com --from 9:00 --to 17:00 --weekdays</code></p>
+</div>
+
+<p style="color:#aaa;">Until then, you can achieve the same thing with a cron job:</p>
+<div class="code-block"><span class="comment"># Add to crontab (run: crontab -e)</span>
+
+<span class="comment"># Block distractions at 9am on weekdays</span>
+0 9 * * 1-5 /usr/local/bin/appblocker block youtube.com
+0 9 * * 1-5 /usr/local/bin/appblocker block reddit.com
+0 9 * * 1-5 /usr/local/bin/appblocker block twitter.com
+
+<span class="comment"># Unblock at 5pm</span>
+0 17 * * 1-5 /usr/local/bin/appblocker unblock youtube.com
+0 17 * * 1-5 /usr/local/bin/appblocker unblock reddit.com
+0 17 * * 1-5 /usr/local/bin/appblocker unblock twitter.com</div>
+<p style="color:#aaa;">Automatic focus hours. Your 9-5 is now distraction-free without you lifting a finger.</p>
+</section>
+
+<section>
+<h2>Why AppBlocker beats paid alternatives</h2>
+<p style="color:#aaa;">Freedom charges $40/year. Cold Turkey charges $39. You're working from home to save money on commuting &mdash; why pay a subscription to focus?</p>
+<div class="grid-2">
+<div class="card">
+<h3><span class="accent">Free forever</span></h3>
+<p>Not "free trial." Not "free tier." Free. Open source. MIT license. Your employer doesn't need to approve a software purchase.</p>
+</div>
+<div class="card">
+<h3><span class="accent">No IT approval needed</span></h3>
+<p>It's a terminal command, not an enterprise app. No admin install, no IT ticket, no approval process. Install it now, use it now.</p>
+</div>
+<div class="card">
+<h3><span class="accent">No data concerns</span></h3>
+<p>Your company's security team won't care because AppBlocker doesn't collect data. Zero telemetry. Nothing leaves your machine. <a href="/appblocker/">See the full feature list</a>.</p>
+</div>
+<div class="card">
+<h3><span class="accent">Works with any setup</span></h3>
+<p>Whether you use a company Mac or personal Mac, Chrome or Arc, Slack or Teams &mdash; AppBlocker works. <a href="/appblocker/block-apps-on-mac/">Block any app</a> or <a href="/appblocker/block-websites-on-mac/">any website</a>.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>FAQ for remote workers</h2>
+
+<details>
+<summary>Can I use this on my company Mac?</summary>
+<div class="answer"><p>If you have Terminal access and admin privileges, yes. AppBlocker is a lightweight script &mdash; no enterprise software to install. It doesn't modify system settings beyond /etc/hosts for website blocking. If your company uses MDM that restricts terminal access, you may need to ask IT.</p></div>
+</details>
+
+<details>
+<summary>Will my employer see what I've blocked?</summary>
+<div class="answer"><p>No. AppBlocker runs locally, stores data locally, and makes zero network requests. Your employer has no way to know you're using it &mdash; unless you tell them (and they'll probably be impressed).</p></div>
+</details>
+
+<details>
+<summary>Can I block Slack during focus time but keep it for meetings?</summary>
+<div class="answer"><p>Yes. Block Slack when you need deep focus, unblock it for meetings. It takes 2 seconds: <code>appblocker unblock "Slack"</code>. You can even set up a cron job to auto-unblock at meeting times.</p></div>
+</details>
+
+<details>
+<summary>What about blocking after work hours?</summary>
+<div class="answer"><p>Great idea. Protect your personal time by blocking work apps after hours. Run <code>appblocker block "Slack"</code> at 6pm, unblock at 9am. Set it up with cron to automate it. Work-life boundaries, enforced by code.</p></div>
+</details>
+
+<details>
+<summary>Is this free?</summary>
+<div class="answer"><p>Yes. 100% free. No trial, no freemium, no "premium plan." Open source under MIT license. <a href="/appblocker/">Learn more</a>.</p></div>
+</details>
+</section>
+
+<section class="cta-section">
+<h2>Make your home office work for you.</h2>
+<p>You chose remote work for the freedom. Don't let distractions steal that freedom back.</p>
+<div class="install-box" style="max-width:560px;margin:0 auto">
+<code>curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+<p style="color:#555;font-size:0.85rem;margin-top:1rem;">Free. No account. Works in 30 seconds.</p>
+</section>
+</main>
+
+<footer>
+<p><a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">GitHub</a> &middot; MIT License &middot; <a href="/appblocker/">AppBlocker</a></p>
+</footer>
+</body>
+</html>

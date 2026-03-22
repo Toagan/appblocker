@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Block Websites on Mac (Free, No App Required)</title>
+<meta name="description" content="Block any website on your Mac for free using AppBlocker. No browser extension, no app to install. Works across all browsers at the system level.">
+<link rel="canonical" href="https://toagan.github.io/appblocker/block-websites-on-mac/">
+<meta property="og:title" content="How to Block Websites on Mac (Free, No App Required)">
+<meta property="og:description" content="Block any website on your Mac for free. No browser extension, no app. Works across all browsers at the system level.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://toagan.github.io/appblocker/block-websites-on-mac/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Block Websites on Mac (Free, No App Required)">
+<meta name="twitter:description" content="Block any website on your Mac for free. No browser extension, no app. Works across all browsers.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Block Websites on Mac",
+  "description": "Block any website on your Mac for free using AppBlocker.",
+  "step": [
+    {"@type": "HowToStep", "name": "Install AppBlocker", "text": "Run curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash in Terminal"},
+    {"@type": "HowToStep", "name": "Block a website", "text": "Run appblocker block youtube.com to block any domain"},
+    {"@type": "HowToStep", "name": "Verify the block", "text": "Try visiting the site. It won't load."}
+  ]
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#00ff88;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #1a1a2e;padding:1rem 1.5rem;position:sticky;top:0;background:#0a0a0a;z-index:100}
+nav .inner{max-width:720px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1.5rem}
+nav .logo{font-weight:700;color:#00ff88;font-size:1.1rem;margin-right:auto}
+nav a.nav-link{color:#888;font-size:0.85rem;transition:color .2s}
+nav a.nav-link:hover{color:#e0e0e0;text-decoration:none}
+main{max-width:720px;margin:0 auto;padding:0 1.5rem}
+section{padding:4rem 0;border-bottom:1px solid #1a1a2e}
+section:last-of-type{border-bottom:none}
+h1{font-size:clamp(1.8rem,4.5vw,2.5rem);line-height:1.2;color:#fff;margin-bottom:1rem}
+h2{font-size:1.5rem;color:#fff;margin-bottom:1rem}
+h3{font-size:1.15rem;color:#fff;margin-bottom:0.5rem}
+p{margin-bottom:1rem}
+.accent{color:#00ff88}
+.warn{color:#ff6b6b}
+.sub{font-size:1.1rem;color:#aaa;margin-bottom:2rem}
+.install-box{background:#1a1a2e;border:1px solid #2a2a4e;border-radius:8px;padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;overflow-x:auto}
+.install-box code{font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.9rem;color:#00ff88;white-space:nowrap;flex:1}
+.install-box button{background:#00ff88;color:#0a0a0a;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;white-space:nowrap;transition:background .2s}
+.install-box button:hover{background:#00cc6a}
+.code-block{background:#1a1a2e;border-radius:6px;padding:0.75rem 1rem;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.85rem;color:#00ff88;overflow-x:auto;margin-bottom:1rem}
+.steps{counter-reset:step;list-style:none;margin-top:1.5rem}
+.steps li{counter-increment:step;margin-bottom:2rem;position:relative;padding-left:3rem}
+.steps li::before{content:counter(step);position:absolute;left:0;top:0;width:2rem;height:2rem;background:#1a1a2e;border:1px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#00ff88;font-size:0.9rem}
+.card{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:1.5rem;margin-bottom:1rem}
+.card h3{margin-bottom:0.5rem}
+.card p{color:#aaa;font-size:0.95rem}
+details{margin-bottom:1rem;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden}
+summary{padding:1rem 1.25rem;cursor:pointer;font-weight:600;color:#fff;background:#111;list-style:none;display:flex;align-items:center;gap:0.5rem}
+summary::before{content:"+";color:#00ff88;font-weight:700;font-size:1.1rem;width:1.25rem}
+details[open] summary::before{content:"-"}
+summary::-webkit-details-marker{display:none}
+details .answer{padding:0 1.25rem 1rem;color:#aaa;font-size:0.95rem}
+footer{border-top:1px solid #1a1a2e;padding:2rem 1.5rem;text-align:center;color:#555;font-size:0.85rem}
+footer a{color:#888}
+.cta-section{text-align:center;padding:3rem 0}
+.cta-section p{color:#aaa;margin-bottom:1.5rem}
+.breadcrumb{padding-top:2rem;font-size:0.85rem;color:#555}
+.breadcrumb a{color:#888}
+@media(max-width:600px){
+  nav .inner{justify-content:center}
+  nav .logo{margin-right:0;width:100%;text-align:center}
+  section{padding:3rem 0}
+}
+</style>
+</head>
+<body>
+<nav>
+<div class="inner">
+<a href="/appblocker/" class="logo">AppBlocker</a>
+<a href="/appblocker/" class="nav-link">Home</a>
+<a href="/appblocker/block-websites-on-mac/" class="nav-link">Block Websites</a>
+<a href="/appblocker/block-apps-on-mac/" class="nav-link">Block Apps</a>
+<a href="/appblocker/for-students/" class="nav-link">Students</a>
+<a href="/appblocker/for-developers/" class="nav-link">Developers</a>
+<a href="/appblocker/for-remote-workers/" class="nav-link">Remote Workers</a>
+</div>
+</nav>
+
+<main>
+<div class="breadcrumb"><a href="/appblocker/">Home</a> / Block Websites on Mac</div>
+
+<section>
+<h1>How to Block Websites on Mac <span class="accent">(Free, No App Required)</span></h1>
+<p class="sub">Browser extensions are a joke. You install them, you disable them, you reinstall them. Here's something that actually works: block websites at the system level so no browser can reach them.</p>
+
+<div class="install-box">
+<code id="install-cmd">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+</section>
+
+<section>
+<h2>Step-by-step: Block any website on Mac</h2>
+<ol class="steps">
+<li>
+<h3>Open Terminal</h3>
+<p style="color:#aaa;">Press <strong>Cmd + Space</strong>, type "Terminal", hit Enter. That's where the magic happens.</p>
+</li>
+<li>
+<h3>Install AppBlocker</h3>
+<p style="color:#aaa;">Paste this command and press Enter:</p>
+<div class="code-block">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</div>
+</li>
+<li>
+<h3>Block the website</h3>
+<p style="color:#aaa;">Tell AppBlocker what to block. Use the domain name:</p>
+<div class="code-block">appblocker block youtube.com</div>
+</li>
+<li>
+<h3>Verify it's blocked</h3>
+<p style="color:#aaa;">Open any browser. Go to the site. It won't load. Across Chrome, Safari, Firefox, Arc &mdash; all of them. Because the block is at the system level, not the browser level.</p>
+</li>
+</ol>
+</section>
+
+<section>
+<h2>Popular websites to block</h2>
+<p style="color:#aaa;margin-bottom:1.5rem;">You already know which ones. Here's the copy-paste for your moment of strength.</p>
+
+<div class="card">
+<h3><a href="/appblocker/block-youtube-on-mac/">Block YouTube</a></h3>
+<div class="code-block">appblocker block youtube.com</div>
+<p>The #1 time thief. "I'll just watch one video" &mdash; sure you will.</p>
+</div>
+
+<div class="card">
+<h3><a href="/appblocker/block-reddit-on-mac/">Block Reddit</a></h3>
+<div class="code-block">appblocker block reddit.com</div>
+<p>You don't need to know what strangers think about everything. Not right now.</p>
+</div>
+
+<div class="card">
+<h3>Block Twitter / X</h3>
+<div class="code-block">appblocker block twitter.com<br>appblocker block x.com</div>
+<p>The outrage machine can wait.</p>
+</div>
+
+<div class="card">
+<h3>Block Instagram</h3>
+<div class="code-block">appblocker block instagram.com</div>
+<p>Their highlight reels will still be there when you're done working.</p>
+</div>
+
+<div class="card">
+<h3>Block TikTok</h3>
+<div class="code-block">appblocker block tiktok.com</div>
+<p>You know exactly how long "just a few minutes" turns into.</p>
+</div>
+</section>
+
+<section>
+<h2>Why this beats browser extensions</h2>
+<p style="color:#aaa;">Browser extensions have one fatal flaw: <span class="warn">you can disable them in 2 seconds.</span> The moment your willpower dips, you click "Disable extension" and you're back on Reddit.</p>
+<p style="color:#aaa;">AppBlocker works at the system level. It modifies your hosts file. That means:</p>
+<ul style="color:#aaa;padding-left:1.5rem;margin-bottom:1rem">
+<li>Works across <strong>all browsers</strong> simultaneously</li>
+<li>Can't be bypassed by switching to another browser</li>
+<li>Can't be disabled by right-clicking an extension icon</li>
+<li>Works even in incognito / private browsing mode</li>
+</ul>
+<p style="color:#aaa;">You have to <em>deliberately</em> go back to Terminal and run the unblock command. That friction is the point. It gives you just enough pause to ask: <span class="warn">"Do I really need this right now?"</span></p>
+</section>
+
+<section>
+<h2>FAQ: Blocking websites on Mac</h2>
+
+<details>
+<summary>Can I block a website on Mac without installing software?</summary>
+<div class="answer"><p>Technically you could edit /etc/hosts manually, but it's tedious and error-prone. AppBlocker automates this with a single command and doesn't require a full app installation &mdash; it's a lightweight script.</p></div>
+</details>
+
+<details>
+<summary>Does this work on Safari, Chrome, and Firefox?</summary>
+<div class="answer"><p>Yes. All of them. And Arc, Brave, Edge, Opera &mdash; every browser. Because the blocking happens at the operating system level, not inside any specific browser.</p></div>
+</details>
+
+<details>
+<summary>Can I block a website during specific hours only?</summary>
+<div class="answer"><p>Scheduled blocking is coming soon. For now, you can combine AppBlocker with a cron job to block and unblock on a schedule. Or just block it and keep it blocked &mdash; you'll survive.</p></div>
+</details>
+
+<details>
+<summary>How do I unblock a website?</summary>
+<div class="answer"><p>Run <code>appblocker unblock youtube.com</code> in Terminal. Instant. No cooldown, no waiting period.</p></div>
+</details>
+
+<details>
+<summary>Is this free?</summary>
+<div class="answer"><p>100% free. Open source. MIT license. No account, no email, no credit card. <a href="/appblocker/">Learn more about AppBlocker</a>.</p></div>
+</details>
+</section>
+
+<section class="cta-section">
+<h2>Block your first website now</h2>
+<p>You came to this page for a reason. You know which site is the problem. Fix it.</p>
+<div class="install-box" style="max-width:560px;margin:0 auto">
+<code>curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+</section>
+</main>
+
+<footer>
+<p><a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">GitHub</a> &middot; MIT License &middot; <a href="/appblocker/">AppBlocker</a></p>
+</footer>
+</body>
+</html>

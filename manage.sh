@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 CONFIG_FILE="$HOME/.config/appblocker/blocked.txt"
+SITES_FILE="$HOME/.config/appblocker/blocked-sites.txt"
+HOSTS_MARKER="# AppBlocker"
 PLIST_NAME="com.user.appblocker"
 PLIST_PATH="$HOME/Library/LaunchAgents/$PLIST_NAME.plist"
 
@@ -93,6 +95,89 @@ cmd_log() {
     [ -f "$logfile" ] && tail -40 "$logfile" || echo "No log yet."
 }
 
+strip_domain() {
+    local d="$1"
+    d="${d#https://}"
+    d="${d#http://}"
+    d="${d#www.}"
+    d="${d%%/*}"
+    d="${d%%:*}"
+    echo "$d"
+}
+
+flush_dns() {
+    sudo dscacheutil -flushcache
+    sudo killall -HUP mDNSResponder 2>/dev/null || true
+    echo "DNS cache flushed."
+}
+
+cmd_site_add() {
+    local raw="$1"
+    if [ -z "$raw" ]; then echo "Usage: bash manage.sh site-add \"domain.com\""; exit 1; fi
+    local domain
+    domain=$(strip_domain "$raw")
+    if [ -z "$domain" ]; then echo "Invalid domain."; exit 1; fi
+
+    # Check if already blocked
+    if grep -q "${domain} ${HOSTS_MARKER}" /etc/hosts 2>/dev/null; then
+        echo "Already blocked: $domain"; exit 0
+    fi
+
+    echo "Blocking $domain (requires sudo)..."
+    sudo sh -c "echo '127.0.0.1 ${domain} ${HOSTS_MARKER}' >> /etc/hosts"
+    sudo sh -c "echo '127.0.0.1 www.${domain} ${HOSTS_MARKER}' >> /etc/hosts"
+
+    # Also store in local reference file
+    mkdir -p "$(dirname "$SITES_FILE")"
+    touch "$SITES_FILE"
+    if ! grep -qxF "$domain" "$SITES_FILE" 2>/dev/null; then
+        echo "$domain" >> "$SITES_FILE"
+    fi
+
+    flush_dns
+    echo "Blocked: $domain and www.$domain"
+}
+
+cmd_site_remove() {
+    echo "Blocked websites:"; echo ""
+    local i=0; declare -a entries
+    while IFS= read -r line; do
+        [[ -z "$line" || "$line" =~ ^#.*$ ]] && continue
+        i=$((i+1)); entries+=("$line")
+        printf "  [%d] %s\n" "$i" "$line"
+    done < <(grep "${HOSTS_MARKER}" /etc/hosts 2>/dev/null | awk '{print $2}' | grep -v '^www\.' | sort -u)
+    [ $i -eq 0 ] && echo "  (none)" && exit 0
+    echo ""; read -rp "Number to remove (0=cancel): " choice
+    [ "$choice" = "0" ] || [ -z "$choice" ] && exit 0
+    if [ "$choice" -lt 1 ] || [ "$choice" -gt $i ] 2>/dev/null; then
+        echo "Invalid choice."; exit 1
+    fi
+    local domain="${entries[$((choice-1))]}"
+    echo "Unblocking $domain (requires sudo)..."
+    sudo sed -i '' "/ ${HOSTS_MARKER}$/{ /${domain}/d; }" /etc/hosts
+    # Remove from local reference file
+    if [ -f "$SITES_FILE" ]; then
+        sed -i '' "/^$(echo "$domain" | sed 's/\./\\./g')$/d" "$SITES_FILE"
+    fi
+    flush_dns
+    echo "Unblocked: $domain"
+}
+
+cmd_site_list() {
+    echo ""; echo "Blocked websites:"; echo ""
+    local found=0
+    while IFS= read -r line; do
+        [[ -z "$line" || "$line" =~ ^#.*$ ]] && continue
+        printf "  %s\n" "$line"
+        found=$((found+1))
+    done < <(grep "${HOSTS_MARKER}" /etc/hosts 2>/dev/null | awk '{print $2}' | sort -u)
+    [ $found -eq 0 ] && echo "  (none)"
+    echo ""
+    local domains=$((found / 2))
+    [ $found -gt 0 ] && echo "  Total: $domains domain(s) blocked (with www variants)"
+    echo ""
+}
+
 cmd_uninstall() {
     read -rp "Remove AppBlocker? (yes/no): " c
     [ "$c" != "yes" ] && exit 0
@@ -102,23 +187,35 @@ cmd_uninstall() {
 }
 
 case "${1:-help}" in
-    add)       cmd_add "$2" ;;
-    remove)    cmd_remove ;;
-    list)      cmd_list ;;
-    find)      cmd_find "$2" ;;
-    status)    cmd_status ;;
-    log)       cmd_log ;;
-    uninstall) cmd_uninstall ;;
+    add)         cmd_add "$2" ;;
+    remove)      cmd_remove ;;
+    list)        cmd_list ;;
+    find)        cmd_find "$2" ;;
+    site-add)    cmd_site_add "$2" ;;
+    site-remove) cmd_site_remove ;;
+    site-list)   cmd_site_list ;;
+    status)      cmd_status ;;
+    log)         cmd_log ;;
+    uninstall)   cmd_uninstall ;;
     *)
         echo ""
         echo "Usage: bash manage.sh <command>"
-        echo "  add \"App Name\"   — block an app"
-        echo "  remove           — interactive unblock"
-        echo "  list             — show blocked apps"
-        echo "  find \"name\"      — search bundle IDs"
-        echo "  status           — daemon status"
-        echo "  log              — show kill log"
-        echo "  uninstall        — remove everything"
+        echo ""
+        echo "  Apps:"
+        echo "  add \"App Name\"       — block an app"
+        echo "  remove               — interactive unblock"
+        echo "  list                 — show blocked apps"
+        echo "  find \"name\"          — search bundle IDs"
+        echo ""
+        echo "  Websites (requires sudo):"
+        echo "  site-add \"domain\"    — block a website via /etc/hosts"
+        echo "  site-remove          — interactive unblock website"
+        echo "  site-list            — show blocked websites"
+        echo ""
+        echo "  System:"
+        echo "  status               — daemon status"
+        echo "  log                  — show kill log"
+        echo "  uninstall            — remove everything"
         echo ""
         ;;
 esac

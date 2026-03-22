@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Blocker for Developers — 60 Lines of Swift, Zero Bloat</title>
+<meta name="description" content="Terminal-native app and website blocker for developers. 60 lines of Swift. No Electron, no subscription, no telemetry. Open source, hackable, respects your time.">
+<link rel="canonical" href="https://toagan.github.io/appblocker/for-developers/">
+<meta property="og:title" content="App Blocker for Developers — 60 Lines of Swift, Zero Bloat">
+<meta property="og:description" content="Terminal-native blocker. 60 lines of Swift. No Electron, no subscription, no telemetry. Open source.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://toagan.github.io/appblocker/for-developers/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="App Blocker for Developers — 60 Lines of Swift, Zero Bloat">
+<meta name="twitter:description" content="Terminal-native blocker. 60 lines of Swift. No Electron, no subscription, no telemetry.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "AppBlocker",
+  "operatingSystem": "macOS",
+  "applicationCategory": "DeveloperApplication",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Terminal-native app and website blocker for developers. 60 lines of Swift. Open source.",
+  "programmingLanguage": "Swift"
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#00ff88;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #1a1a2e;padding:1rem 1.5rem;position:sticky;top:0;background:#0a0a0a;z-index:100}
+nav .inner{max-width:720px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1.5rem}
+nav .logo{font-weight:700;color:#00ff88;font-size:1.1rem;margin-right:auto}
+nav a.nav-link{color:#888;font-size:0.85rem;transition:color .2s}
+nav a.nav-link:hover{color:#e0e0e0;text-decoration:none}
+main{max-width:720px;margin:0 auto;padding:0 1.5rem}
+section{padding:4rem 0;border-bottom:1px solid #1a1a2e}
+section:last-of-type{border-bottom:none}
+h1{font-size:clamp(1.8rem,4.5vw,2.5rem);line-height:1.2;color:#fff;margin-bottom:1rem}
+h2{font-size:1.5rem;color:#fff;margin-bottom:1rem}
+h3{font-size:1.15rem;color:#fff;margin-bottom:0.5rem}
+p{margin-bottom:1rem}
+.accent{color:#00ff88}
+.warn{color:#ff6b6b}
+.dim{color:#555}
+.sub{font-size:1.1rem;color:#aaa;margin-bottom:2rem}
+.install-box{background:#1a1a2e;border:1px solid #2a2a4e;border-radius:8px;padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;overflow-x:auto}
+.install-box code{font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.9rem;color:#00ff88;white-space:nowrap;flex:1}
+.install-box button{background:#00ff88;color:#0a0a0a;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;white-space:nowrap;transition:background .2s}
+.install-box button:hover{background:#00cc6a}
+.code-block{background:#1a1a2e;border-radius:6px;padding:0.75rem 1rem;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.85rem;color:#00ff88;overflow-x:auto;margin-bottom:1rem}
+.code-block .comment{color:#555}
+.card{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:1.5rem;margin-bottom:1rem}
+.card h3{margin-bottom:0.5rem}
+.card p{color:#aaa;font-size:0.95rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem}
+.stat{text-align:center;padding:1.5rem}
+.stat .num{font-size:2rem;font-weight:700;color:#00ff88;display:block}
+.stat .label{color:#888;font-size:0.85rem}
+.callout{background:#1a1a2e;border-left:3px solid #00ff88;padding:1.25rem;margin-bottom:1.5rem;border-radius:0 6px 6px 0}
+.callout p{margin:0;color:#ccc;font-size:0.95rem}
+details{margin-bottom:1rem;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden}
+summary{padding:1rem 1.25rem;cursor:pointer;font-weight:600;color:#fff;background:#111;list-style:none;display:flex;align-items:center;gap:0.5rem}
+summary::before{content:"+";color:#00ff88;font-weight:700;font-size:1.1rem;width:1.25rem}
+details[open] summary::before{content:"-"}
+summary::-webkit-details-marker{display:none}
+details .answer{padding:0 1.25rem 1rem;color:#aaa;font-size:0.95rem}
+footer{border-top:1px solid #1a1a2e;padding:2rem 1.5rem;text-align:center;color:#555;font-size:0.85rem}
+footer a{color:#888}
+.cta-section{text-align:center;padding:3rem 0}
+.cta-section p{color:#aaa;margin-bottom:1.5rem}
+.breadcrumb{padding-top:2rem;font-size:0.85rem;color:#555}
+.breadcrumb a{color:#888}
+@media(max-width:600px){
+  .grid-3{grid-template-columns:1fr}
+  nav .inner{justify-content:center}
+  nav .logo{margin-right:0;width:100%;text-align:center}
+  section{padding:3rem 0}
+}
+</style>
+</head>
+<body>
+<nav>
+<div class="inner">
+<a href="/appblocker/" class="logo">AppBlocker</a>
+<a href="/appblocker/" class="nav-link">Home</a>
+<a href="/appblocker/block-websites-on-mac/" class="nav-link">Block Websites</a>
+<a href="/appblocker/block-apps-on-mac/" class="nav-link">Block Apps</a>
+<a href="/appblocker/for-students/" class="nav-link">Students</a>
+<a href="/appblocker/for-developers/" class="nav-link">Developers</a>
+<a href="/appblocker/for-remote-workers/" class="nav-link">Remote Workers</a>
+</div>
+</nav>
+
+<main>
+<div class="breadcrumb"><a href="/appblocker/">Home</a> / For Developers</div>
+
+<section>
+<h1>App Blocker for Developers &mdash; <span class="accent">60 Lines of Swift, Zero Bloat</span></h1>
+<p class="sub">No Electron. No subscription. No telemetry. No 200MB runtime for a tool that blocks apps. Just Swift, a terminal, and respect for your machine.</p>
+
+<div class="install-box">
+<code id="install-cmd">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+</section>
+
+<section>
+<div class="grid-3">
+<div class="card stat">
+<span class="num">60</span>
+<span class="label">lines of Swift</span>
+</div>
+<div class="card stat">
+<span class="num">0</span>
+<span class="label">dependencies</span>
+</div>
+<div class="card stat">
+<span class="num">0</span>
+<span class="label">network requests</span>
+</div>
+</div>
+<p style="color:#aaa;text-align:center;">You can read the entire source code during a coffee break. <a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">Do it</a>.</p>
+</section>
+
+<section>
+<h2>Why developers need this</h2>
+<p style="color:#aaa;">You know the feeling. You're deep in a problem. The code is starting to make sense. You can see the architecture forming. Then Slack pings. Or your brain decides it's time to check Hacker News. Or you "quickly" check Reddit for a solution and emerge 30 minutes later knowing way too much about someone's keyboard build.</p>
+
+<div class="callout">
+<p><strong>A single distraction costs 23 minutes to recover from.</strong> That's not opinion &mdash; that's research from UC Irvine. One Slack ping during deep work doesn't cost you 5 seconds. It costs you 23 minutes of context switching.</p>
+</div>
+
+<p style="color:#aaa;">AppBlocker protects your flow state. Block the apps and sites that pull you out, and get back to the work that actually matters.</p>
+</section>
+
+<section>
+<h2>The developer deep work setup</h2>
+<div class="code-block"><span class="comment"># Block the usual suspects</span>
+appblocker block "Slack"
+appblocker block "Discord"
+appblocker block "Messages"
+appblocker block "Mail"
+
+<span class="comment"># Block the "quick check" sites</span>
+appblocker block news.ycombinator.com
+appblocker block reddit.com
+appblocker block twitter.com
+appblocker block youtube.com
+
+<span class="comment"># Check what's blocked</span>
+appblocker list
+
+<span class="comment"># ... do deep work ...</span>
+
+<span class="comment"># Unblock when you're done</span>
+appblocker unblock "Slack"
+appblocker unblock "Mail"</div>
+
+<p style="color:#aaa;">Add this to a shell alias. Call it <code style="color:#00ff88">focus</code>. Or <code style="color:#00ff88">deepwork</code>. Or <code style="color:#00ff88">shutup</code>. Your call.</p>
+
+<div class="code-block"><span class="comment"># Add to your .zshrc or .bashrc</span>
+alias focus='appblocker block "Slack" && appblocker block "Discord" && appblocker block reddit.com && appblocker block twitter.com && appblocker block news.ycombinator.com && echo "Focus mode: ON"'
+alias unfocus='appblocker unblock "Slack" && appblocker unblock "Discord" && appblocker unblock reddit.com && appblocker unblock twitter.com && appblocker unblock news.ycombinator.com && echo "Focus mode: OFF"'</div>
+</section>
+
+<section>
+<h2>What makes this different</h2>
+<p style="color:#aaa;margin-bottom:1.5rem;">Built by developers, for developers. Here's what that means:</p>
+
+<div class="card">
+<h3><span class="accent">Terminal-native</span></h3>
+<p>No GUI. No menubar icon. No system tray. It lives where you live &mdash; in the terminal. Pipe it, alias it, script it, cron it. It's a CLI tool that behaves like a CLI tool.</p>
+</div>
+
+<div class="card">
+<h3><span class="accent">60 lines of readable Swift</span></h3>
+<p>The entire tool is a single Swift file. No abstractions, no frameworks, no dependency tree. You can audit it in 5 minutes. Fork it and modify it in 10. This is software the way software should be.</p>
+</div>
+
+<div class="card">
+<h3><span class="accent">Zero telemetry</span></h3>
+<p>No analytics SDK. No crash reporting. No "anonymous usage data." No phone-home. Not even a check for updates. It makes exactly zero network requests. Ever.</p>
+</div>
+
+<div class="card">
+<h3><span class="accent">No account, no cloud, no sync</span></h3>
+<p>Your block list lives on your machine. There's no account to create, no cloud to trust, no sync server to go down. It's local. As it should be.</p>
+</div>
+
+<div class="card">
+<h3><span class="accent">Hackable</span></h3>
+<p>Don't like something? Change it. It's MIT licensed, 60 lines long, and written in Swift. Add scheduled blocking. Add a different enforcement mechanism. Make it work with Raycast or Alfred. The code is designed to be understood and modified.</p>
+</div>
+</section>
+
+<section>
+<h2>Integrate with your workflow</h2>
+<div class="code-block"><span class="comment"># Start a Pomodoro with blocking</span>
+focus && sleep 1500 && unfocus && say "Break time"
+
+<span class="comment"># Block during git work sessions</span>
+git_focus() {
+  focus
+  git "$@"
+  unfocus
+}
+
+<span class="comment"># Add to your tmux startup</span>
+<span class="comment"># Block distractions when you start your dev session</span>
+tmux new-session -d -s dev "focus && nvim"</div>
+</section>
+
+<section>
+<h2>The source code</h2>
+<p style="color:#aaa;">You're a developer. You want to see the code before you install anything. Respect. Here's the deal:</p>
+<ul style="color:#aaa;padding-left:1.5rem;margin-bottom:1rem">
+<li>One Swift file</li>
+<li>~60 lines</li>
+<li>No external dependencies</li>
+<li>Uses native macOS APIs (NSWorkspace for apps, /etc/hosts for websites)</li>
+<li>MIT license</li>
+</ul>
+<p style="color:#aaa;"><a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">Read it on GitHub</a>. Star it if you want. Or don't. It'll work either way.</p>
+</section>
+
+<section>
+<h2>FAQ for developers</h2>
+
+<details>
+<summary>How does app blocking work technically?</summary>
+<div class="answer"><p>AppBlocker uses NSWorkspace notifications to monitor app launches. When a blocked app is detected, it sends a SIGTERM to the process. For websites, it adds entries to /etc/hosts pointing the domain to 127.0.0.1.</p></div>
+</details>
+
+<details>
+<summary>Can I contribute?</summary>
+<div class="answer"><p>Yes. It's MIT licensed on GitHub. PRs welcome. The codebase is intentionally small &mdash; if your feature can't be done in a few lines, it might not belong in the core. But fork it and go wild.</p></div>
+</details>
+
+<details>
+<summary>Does it need root access?</summary>
+<div class="answer"><p>Website blocking requires sudo (to modify /etc/hosts). App blocking doesn't. The install script will explain what permissions are needed.</p></div>
+</details>
+
+<details>
+<summary>Will it conflict with my dev tools?</summary>
+<div class="answer"><p>No. AppBlocker only blocks what you tell it to block. Your IDE, Terminal, browsers (except for blocked domains), and dev tools are untouched. Don't block Terminal though &mdash; that would be ironic.</p></div>
+</details>
+
+<details>
+<summary>Why Swift and not a shell script?</summary>
+<div class="answer"><p>App blocking requires hooking into NSWorkspace for process monitoring, which needs a native macOS runtime. Swift gives us that with zero dependencies and compiles to a single binary. No Python, no Node, no Ruby runtime needed.</p></div>
+</details>
+</section>
+
+<section class="cta-section">
+<h2>You've read the docs. Ship the install.</h2>
+<p>One command. No node_modules. No Docker. No "please sign in to continue."</p>
+<div class="install-box" style="max-width:560px;margin:0 auto">
+<code>curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+<p style="color:#555;font-size:0.85rem;margin-top:1rem;"><a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">Or read the source first</a>. We respect that.</p>
+</section>
+</main>
+
+<footer>
+<p><a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">GitHub</a> &middot; MIT License &middot; <a href="/appblocker/">AppBlocker</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Block Reddit on Mac — Stop Doomscrolling</title>
+<meta name="description" content="Block Reddit on your Mac. Stop doomscrolling. Free, open source, works across all browsers. One terminal command, no extension to disable.">
+<link rel="canonical" href="https://toagan.github.io/appblocker/block-reddit-on-mac/">
+<meta property="og:title" content="How to Block Reddit on Mac — Stop Doomscrolling">
+<meta property="og:description" content="Block Reddit on your Mac. Stop doomscrolling. Free, open source, one terminal command.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://toagan.github.io/appblocker/block-reddit-on-mac/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Block Reddit on Mac — Stop Doomscrolling">
+<meta name="twitter:description" content="Block Reddit on your Mac. Stop doomscrolling. Free, one terminal command.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Block Reddit on Mac",
+  "description": "Block Reddit on your Mac to stop doomscrolling using AppBlocker.",
+  "step": [
+    {"@type": "HowToStep", "name": "Install AppBlocker", "text": "Run the install command in Terminal"},
+    {"@type": "HowToStep", "name": "Block Reddit", "text": "Run appblocker block reddit.com"},
+    {"@type": "HowToStep", "name": "Verify", "text": "Try visiting reddit.com. It won't load."}
+  ]
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#00ff88;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #1a1a2e;padding:1rem 1.5rem;position:sticky;top:0;background:#0a0a0a;z-index:100}
+nav .inner{max-width:720px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1.5rem}
+nav .logo{font-weight:700;color:#00ff88;font-size:1.1rem;margin-right:auto}
+nav a.nav-link{color:#888;font-size:0.85rem;transition:color .2s}
+nav a.nav-link:hover{color:#e0e0e0;text-decoration:none}
+main{max-width:720px;margin:0 auto;padding:0 1.5rem}
+section{padding:4rem 0;border-bottom:1px solid #1a1a2e}
+section:last-of-type{border-bottom:none}
+h1{font-size:clamp(1.8rem,4.5vw,2.5rem);line-height:1.2;color:#fff;margin-bottom:1rem}
+h2{font-size:1.5rem;color:#fff;margin-bottom:1rem}
+h3{font-size:1.15rem;color:#fff;margin-bottom:0.5rem}
+p{margin-bottom:1rem}
+.accent{color:#00ff88}
+.warn{color:#ff6b6b}
+.sub{font-size:1.1rem;color:#aaa;margin-bottom:2rem}
+.install-box{background:#1a1a2e;border:1px solid #2a2a4e;border-radius:8px;padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;overflow-x:auto}
+.install-box code{font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.9rem;color:#00ff88;white-space:nowrap;flex:1}
+.install-box button{background:#00ff88;color:#0a0a0a;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;white-space:nowrap;transition:background .2s}
+.install-box button:hover{background:#00cc6a}
+.code-block{background:#1a1a2e;border-radius:6px;padding:0.75rem 1rem;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.85rem;color:#00ff88;overflow-x:auto;margin-bottom:1rem}
+.steps{counter-reset:step;list-style:none;margin-top:1.5rem}
+.steps li{counter-increment:step;margin-bottom:2rem;position:relative;padding-left:3rem}
+.steps li::before{content:counter(step);position:absolute;left:0;top:0;width:2rem;height:2rem;background:#1a1a2e;border:1px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#00ff88;font-size:0.9rem}
+.card{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:1.5rem;margin-bottom:1rem}
+.callout{background:#1a1a2e;border-left:3px solid #ff6b6b;padding:1.25rem;margin-bottom:1.5rem;border-radius:0 6px 6px 0}
+.callout p{margin:0;color:#ccc;font-size:0.95rem}
+details{margin-bottom:1rem;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden}
+summary{padding:1rem 1.25rem;cursor:pointer;font-weight:600;color:#fff;background:#111;list-style:none;display:flex;align-items:center;gap:0.5rem}
+summary::before{content:"+";color:#00ff88;font-weight:700;font-size:1.1rem;width:1.25rem}
+details[open] summary::before{content:"-"}
+summary::-webkit-details-marker{display:none}
+details .answer{padding:0 1.25rem 1rem;color:#aaa;font-size:0.95rem}
+footer{border-top:1px solid #1a1a2e;padding:2rem 1.5rem;text-align:center;color:#555;font-size:0.85rem}
+footer a{color:#888}
+.cta-section{text-align:center;padding:3rem 0}
+.cta-section p{color:#aaa;margin-bottom:1.5rem}
+.breadcrumb{padding-top:2rem;font-size:0.85rem;color:#555}
+.breadcrumb a{color:#888}
+@media(max-width:600px){
+  nav .inner{justify-content:center}
+  nav .logo{margin-right:0;width:100%;text-align:center}
+  section{padding:3rem 0}
+}
+</style>
+</head>
+<body>
+<nav>
+<div class="inner">
+<a href="/appblocker/" class="logo">AppBlocker</a>
+<a href="/appblocker/" class="nav-link">Home</a>
+<a href="/appblocker/block-websites-on-mac/" class="nav-link">Block Websites</a>
+<a href="/appblocker/block-apps-on-mac/" class="nav-link">Block Apps</a>
+<a href="/appblocker/for-students/" class="nav-link">Students</a>
+<a href="/appblocker/for-developers/" class="nav-link">Developers</a>
+<a href="/appblocker/for-remote-workers/" class="nav-link">Remote Workers</a>
+</div>
+</nav>
+
+<main>
+<div class="breadcrumb"><a href="/appblocker/">Home</a> / <a href="/appblocker/block-websites-on-mac/">Block Websites</a> / Block Reddit</div>
+
+<section>
+<h1>How to Block Reddit on Mac &mdash; <span class="warn">Stop Doomscrolling</span></h1>
+<p class="sub">You opened Reddit to check one thing. That was 45 minutes ago. You've read three arguments about a topic you don't care about and watched a dog fall off a couch. Twice. Let's fix this.</p>
+
+<div class="install-box">
+<code id="install-cmd">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+</section>
+
+<section>
+<h2>The Reddit trap</h2>
+<p style="color:#aaa;">Reddit is uniquely dangerous because it <em>feels</em> productive. "I'm learning things. I'm reading discussions. I'm staying informed." But you're not. You're doomscrolling through an infinite feed of takes, memes, and arguments that will mean nothing to you tomorrow.</p>
+
+<div class="callout">
+<p><strong>The real cost:</strong> Reddit's infinite scroll means there's no natural stopping point. No "end of feed." No "you're all caught up." It never ends because it's designed to never end.</p>
+</div>
+
+<p style="color:#aaa;">You don't have a Reddit problem. Reddit has a <span class="warn">you</span> problem. It's designed to extract your attention. The only winning move is to cut the connection.</p>
+</section>
+
+<section>
+<h2>Block Reddit in 30 seconds</h2>
+<ol class="steps">
+<li>
+<h3>Install AppBlocker</h3>
+<p style="color:#aaa;">Open Terminal (Cmd + Space, type "Terminal"):</p>
+<div class="code-block">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</div>
+</li>
+<li>
+<h3>Block Reddit</h3>
+<p style="color:#aaa;">One command. Blocks reddit.com across every browser on your Mac:</p>
+<div class="code-block">appblocker block reddit.com</div>
+</li>
+<li>
+<h3>Block old.reddit.com too</h3>
+<p style="color:#aaa;">Because you're clever and you know about old Reddit:</p>
+<div class="code-block">appblocker block old.reddit.com</div>
+</li>
+<li>
+<h3>Breathe</h3>
+<p style="color:#aaa;">Open your browser. Type reddit.com out of habit. Watch nothing load. Feel the urge. Let it pass. <span class="accent">That's what freedom feels like.</span></p>
+</li>
+</ol>
+</section>
+
+<section>
+<h2>The doomscrolling cycle</h2>
+<p style="color:#aaa;">Recognize this?</p>
+
+<div class="card">
+<h3>1. The trigger</h3>
+<p>You're bored for 3 seconds. Or stuck on a problem. Or waiting for a build to finish. Your fingers type r-e-d-d-i-t before your brain catches up.</p>
+</div>
+
+<div class="card">
+<h3>2. The rabbit hole</h3>
+<p>"I'll just check the front page." Then a comment thread. Then a related post. Then a completely unrelated subreddit. Then it's been 40 minutes.</p>
+</div>
+
+<div class="card">
+<h3>3. The guilt</h3>
+<p>You close the tab. You feel bad. You promise yourself "never again." But you don't change anything structural. So it happens again tomorrow.</p>
+</div>
+
+<div class="card" style="border-color:#00ff88">
+<h3 class="accent">4. The fix</h3>
+<p style="color:#e0e0e0">Break the cycle at step 1. When your fingers type reddit.com, <strong>nothing loads</strong>. The habit can't complete. After a few days, the urge fades. That's what AppBlocker does.</p>
+</div>
+</section>
+
+<section>
+<h2>Block the entire Reddit ecosystem</h2>
+<p style="color:#aaa;">Reddit has more entry points than you think. Block them all:</p>
+<div class="code-block"># Block all Reddit access points
+appblocker block reddit.com
+appblocker block old.reddit.com
+appblocker block www.reddit.com
+appblocker block i.reddit.com      # mobile web version
+appblocker block np.reddit.com     # "no participation" links</div>
+<p style="color:#aaa;">This blocks Reddit across all browsers. No extensions to disable. No incognito loopholes. No "just use Safari instead" workarounds. Want to block apps too? <a href="/appblocker/block-apps-on-mac/">See our app blocking guide</a>.</p>
+</section>
+
+<section>
+<h2>FAQ: Blocking Reddit on Mac</h2>
+
+<details>
+<summary>Will this block all subreddits?</summary>
+<div class="answer"><p>Yes. Blocking reddit.com blocks the entire site &mdash; every subreddit, every comment thread, every link. You can't selectively block subreddits because your brain will find the distracting ones no matter what.</p></div>
+</details>
+
+<details>
+<summary>What about Reddit links in Google search results?</summary>
+<div class="answer"><p>They'll show up in search results, but clicking them will lead to a blank page. The link is there; the content is not. This is actually helpful &mdash; you'll learn to skip Reddit results and find answers elsewhere.</p></div>
+</details>
+
+<details>
+<summary>I need Reddit for work/programming help</summary>
+<div class="answer"><p>No, you don't. Stack Overflow exists. Documentation exists. You can unblock Reddit for a specific research session with <code>appblocker unblock reddit.com</code>, do your research, and immediately re-block it. Controlled access, not unrestricted access.</p></div>
+</details>
+
+<details>
+<summary>How do I unblock Reddit?</summary>
+<div class="answer"><p>Run <code>appblocker unblock reddit.com</code> in Terminal. But think about why you're unblocking it. Is it a need or a craving?</p></div>
+</details>
+
+<details>
+<summary>Does this cost anything?</summary>
+<div class="answer"><p>No. Free. Open source. No account needed. <a href="/appblocker/">Learn more about AppBlocker</a>.</p></div>
+</details>
+</section>
+
+<section class="cta-section">
+<h2>You've been on this page long enough.</h2>
+<p>The irony of reading about blocking Reddit instead of blocking Reddit is not lost on us. Do the thing.</p>
+<div class="install-box" style="max-width:560px;margin:0 auto">
+<code>curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+<p style="color:#555;font-size:0.85rem;margin-top:1rem;">Then run: <code style="color:#00ff88">appblocker block reddit.com</code></p>
+</section>
+</main>
+
+<footer>
+<p><a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">GitHub</a> &middot; MIT License &middot; <a href="/appblocker/">AppBlocker</a></p>
+</footer>
+</body>
+</html>

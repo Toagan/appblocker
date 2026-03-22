@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Block Apps on Mac — Free, Open Source Way</title>
+<meta name="description" content="Block any app on your Mac for free with AppBlocker. One terminal command. No Screen Time workarounds, no paid software. Open source.">
+<link rel="canonical" href="https://toagan.github.io/appblocker/block-apps-on-mac/">
+<meta property="og:title" content="How to Block Apps on Mac — The Free, Open Source Way">
+<meta property="og:description" content="Block any app on your Mac for free. One terminal command. No Screen Time workarounds. Open source.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://toagan.github.io/appblocker/block-apps-on-mac/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Block Apps on Mac — The Free, Open Source Way">
+<meta name="twitter:description" content="Block any app on your Mac for free. One terminal command. Open source.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Block Apps on Mac",
+  "description": "Block any app on your Mac for free using AppBlocker.",
+  "step": [
+    {"@type": "HowToStep", "name": "Install AppBlocker", "text": "Run the install command in Terminal"},
+    {"@type": "HowToStep", "name": "Block an app", "text": "Run appblocker block AppName"},
+    {"@type": "HowToStep", "name": "The app is now blocked", "text": "If you try to open it, it closes immediately"}
+  ]
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#00ff88;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #1a1a2e;padding:1rem 1.5rem;position:sticky;top:0;background:#0a0a0a;z-index:100}
+nav .inner{max-width:720px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1.5rem}
+nav .logo{font-weight:700;color:#00ff88;font-size:1.1rem;margin-right:auto}
+nav a.nav-link{color:#888;font-size:0.85rem;transition:color .2s}
+nav a.nav-link:hover{color:#e0e0e0;text-decoration:none}
+main{max-width:720px;margin:0 auto;padding:0 1.5rem}
+section{padding:4rem 0;border-bottom:1px solid #1a1a2e}
+section:last-of-type{border-bottom:none}
+h1{font-size:clamp(1.8rem,4.5vw,2.5rem);line-height:1.2;color:#fff;margin-bottom:1rem}
+h2{font-size:1.5rem;color:#fff;margin-bottom:1rem}
+h3{font-size:1.15rem;color:#fff;margin-bottom:0.5rem}
+p{margin-bottom:1rem}
+.accent{color:#00ff88}
+.warn{color:#ff6b6b}
+.sub{font-size:1.1rem;color:#aaa;margin-bottom:2rem}
+.install-box{background:#1a1a2e;border:1px solid #2a2a4e;border-radius:8px;padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;overflow-x:auto}
+.install-box code{font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.9rem;color:#00ff88;white-space:nowrap;flex:1}
+.install-box button{background:#00ff88;color:#0a0a0a;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;white-space:nowrap;transition:background .2s}
+.install-box button:hover{background:#00cc6a}
+.code-block{background:#1a1a2e;border-radius:6px;padding:0.75rem 1rem;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:0.85rem;color:#00ff88;overflow-x:auto;margin-bottom:1rem}
+.steps{counter-reset:step;list-style:none;margin-top:1.5rem}
+.steps li{counter-increment:step;margin-bottom:2rem;position:relative;padding-left:3rem}
+.steps li::before{content:counter(step);position:absolute;left:0;top:0;width:2rem;height:2rem;background:#1a1a2e;border:1px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#00ff88;font-size:0.9rem}
+.card{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:1.5rem;margin-bottom:1rem}
+.card h3{margin-bottom:0.5rem}
+.card p{color:#aaa;font-size:0.95rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;margin-top:1rem;margin-bottom:1.5rem;font-size:0.9rem}
+th,td{text-align:left;padding:0.75rem 1rem;border-bottom:1px solid #1a1a2e}
+th{color:#888;font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em}
+.check{color:#00ff88}
+.cross{color:#ff6b6b}
+details{margin-bottom:1rem;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden}
+summary{padding:1rem 1.25rem;cursor:pointer;font-weight:600;color:#fff;background:#111;list-style:none;display:flex;align-items:center;gap:0.5rem}
+summary::before{content:"+";color:#00ff88;font-weight:700;font-size:1.1rem;width:1.25rem}
+details[open] summary::before{content:"-"}
+summary::-webkit-details-marker{display:none}
+details .answer{padding:0 1.25rem 1rem;color:#aaa;font-size:0.95rem}
+footer{border-top:1px solid #1a1a2e;padding:2rem 1.5rem;text-align:center;color:#555;font-size:0.85rem}
+footer a{color:#888}
+.cta-section{text-align:center;padding:3rem 0}
+.cta-section p{color:#aaa;margin-bottom:1.5rem}
+.breadcrumb{padding-top:2rem;font-size:0.85rem;color:#555}
+.breadcrumb a{color:#888}
+@media(max-width:600px){
+  .grid-2{grid-template-columns:1fr}
+  nav .inner{justify-content:center}
+  nav .logo{margin-right:0;width:100%;text-align:center}
+  section{padding:3rem 0}
+  table{font-size:0.8rem}
+  th,td{padding:0.5rem}
+}
+</style>
+</head>
+<body>
+<nav>
+<div class="inner">
+<a href="/appblocker/" class="logo">AppBlocker</a>
+<a href="/appblocker/" class="nav-link">Home</a>
+<a href="/appblocker/block-websites-on-mac/" class="nav-link">Block Websites</a>
+<a href="/appblocker/block-apps-on-mac/" class="nav-link">Block Apps</a>
+<a href="/appblocker/for-students/" class="nav-link">Students</a>
+<a href="/appblocker/for-developers/" class="nav-link">Developers</a>
+<a href="/appblocker/for-remote-workers/" class="nav-link">Remote Workers</a>
+</div>
+</nav>
+
+<main>
+<div class="breadcrumb"><a href="/appblocker/">Home</a> / Block Apps on Mac</div>
+
+<section>
+<h1>How to Block Apps on Mac &mdash; <span class="accent">The Free, Open Source Way</span></h1>
+<p class="sub">Screen Time is a parental control pretending to be a productivity tool. You need something that actually stops you from opening apps &mdash; not something you can bypass with your own password.</p>
+
+<div class="install-box">
+<code id="install-cmd">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+</section>
+
+<section>
+<h2>Block any Mac app in 3 steps</h2>
+<ol class="steps">
+<li>
+<h3>Install AppBlocker</h3>
+<p style="color:#aaa;">Open Terminal (Cmd + Space, type "Terminal") and paste:</p>
+<div class="code-block">curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</div>
+</li>
+<li>
+<h3>Block the app</h3>
+<p style="color:#aaa;">Use the app's name as it appears in your Applications folder:</p>
+<div class="code-block">appblocker block "Slack"</div>
+</li>
+<li>
+<h3>Try to open it</h3>
+<p style="color:#aaa;">Go ahead. Click the icon in your Dock. It opens for a split second and closes. AppBlocker is watching. The app is dead on arrival.</p>
+</li>
+</ol>
+</section>
+
+<section>
+<h2>Apps people block the most</h2>
+<div class="grid-2">
+<div class="card">
+<h3>Social media</h3>
+<div class="code-block">appblocker block "Twitter"<br>appblocker block "Instagram"<br>appblocker block "TikTok"</div>
+</div>
+<div class="card">
+<h3>Messaging</h3>
+<div class="code-block">appblocker block "Slack"<br>appblocker block "Discord"<br>appblocker block "Messages"</div>
+</div>
+<div class="card">
+<h3>Games</h3>
+<div class="code-block">appblocker block "Steam"<br>appblocker block "Chess"<br>appblocker block "Minecraft"</div>
+</div>
+<div class="card">
+<h3>Entertainment</h3>
+<div class="code-block">appblocker block "YouTube"<br>appblocker block "Netflix"<br>appblocker block "Spotify"</div>
+</div>
+</div>
+<p style="color:#aaa;font-size:0.9rem;">If it's in your Applications folder, AppBlocker can block it. Period.</p>
+</section>
+
+<section>
+<h2>Why Screen Time doesn't cut it</h2>
+<p style="color:#aaa;">Apple's Screen Time was designed for parents to limit their kids' usage. Using it on yourself is like locking the cookie jar and taping the key to the lid.</p>
+
+<table>
+<thead>
+<tr><th>Problem</th><th>Screen Time</th><th>AppBlocker</th></tr>
+</thead>
+<tbody>
+<tr><td>You can bypass it with your own password</td><td class="cross">Yes</td><td class="check">Requires terminal</td></tr>
+<tr><td>"Ignore Limit" button</td><td class="cross">Yes, one click</td><td class="check">No such thing</td></tr>
+<tr><td>Block any arbitrary app</td><td class="cross">Limited categories</td><td class="check">Any app by name</td></tr>
+<tr><td>Block websites too</td><td class="cross">Buried in settings</td><td class="check">Same command</td></tr>
+<tr><td>Open source</td><td class="cross">No</td><td class="check">60 lines of Swift</td></tr>
+<tr><td>Works immediately</td><td class="cross">Wait for sync</td><td class="check">Instant</td></tr>
+</tbody>
+</table>
+<p style="color:#aaa;">Screen Time's "One More Minute" button is the <span class="warn">worst feature ever designed</span> for someone trying to focus. AppBlocker doesn't negotiate.</p>
+</section>
+
+<section>
+<h2>Combine app + website blocking</h2>
+<p style="color:#aaa;">Most distractions have both an app and a website. Block both.</p>
+<div class="code-block"># Block YouTube everywhere
+appblocker block "YouTube"      # the Mac app
+appblocker block youtube.com    # the website
+
+# Block Reddit everywhere
+appblocker block reddit.com     # the website
+# (Reddit doesn't have a Mac app, but if it did...)</div>
+<p style="color:#aaa;">Learn more about <a href="/appblocker/block-websites-on-mac/">blocking websites on Mac</a>.</p>
+</section>
+
+<section>
+<h2>FAQ: Blocking apps on Mac</h2>
+
+<details>
+<summary>Can I block any Mac app?</summary>
+<div class="answer"><p>Yes. Any app that runs as a process on your Mac can be blocked. This includes apps from the App Store, apps installed manually, and system apps (though we recommend not blocking Finder or Terminal).</p></div>
+</details>
+
+<details>
+<summary>What happens when I try to open a blocked app?</summary>
+<div class="answer"><p>The app launches briefly and is immediately terminated by AppBlocker. You'll see it flash and close. It can't run while it's on the block list.</p></div>
+</details>
+
+<details>
+<summary>Is this better than macOS Screen Time?</summary>
+<div class="answer"><p>For self-control purposes, yes. Screen Time lets you bypass limits with one click ("Ignore Limit"). AppBlocker requires you to open Terminal and run an unblock command &mdash; enough friction to make you think twice.</p></div>
+</details>
+
+<details>
+<summary>Can I block apps on a schedule?</summary>
+<div class="answer"><p>Scheduled blocking is coming soon. For now, you can use cron jobs or macOS's built-in launchd to schedule block and unblock commands.</p></div>
+</details>
+
+<details>
+<summary>How do I unblock an app?</summary>
+<div class="answer"><p>Run <code>appblocker unblock "AppName"</code> in Terminal. The app is immediately available again.</p></div>
+</details>
+
+<details>
+<summary>Does this collect any data?</summary>
+<div class="answer"><p>No. Zero telemetry. AppBlocker runs entirely locally, makes no network requests, and is open source so you can verify this yourself. <a href="/appblocker/">Learn more</a>.</p></div>
+</details>
+</section>
+
+<section class="cta-section">
+<h2>You know which app is the problem.</h2>
+<p>Stop pretending you'll "just use it less." Block it.</p>
+<div class="install-box" style="max-width:560px;margin:0 auto">
+<code>curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash</code>
+<button onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/Toagan/appblocker/main/install.sh | bash');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+</section>
+</main>
+
+<footer>
+<p><a href="https://github.com/Toagan/appblocker" target="_blank" rel="noopener">GitHub</a> &middot; MIT License &middot; <a href="/appblocker/">AppBlocker</a></p>
+</footer>
+</body>
+</html>
